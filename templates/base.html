@@ -1,11 +1,32 @@
 {% load static %}
 
-<html>
+<!doctype html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Django Blog</title>
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
     </head>
-    <header>
-        <a href="{% url 'post_new' %}">+ New Blog Post</a>
-    </header>
+    <body>
+        <header>
+            <a href="{% url 'home' %}">Django Blog</a>
+            <nav>
+                {% if user.is_authenticated %}
+                    <span>Signed in as {{ user.username }}</span>
+                    <a href="{% url 'post_new' %}">New post</a>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">Log out</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}">Log in</a>
+                    <a href="{% url 'signup' %}">Sign up</a>
+                {% endif %}
+            </nav>
+        </header>
+        <main>
+            {% block content %}{% endblock content %}
+        </main>
+    </body>
 </html>

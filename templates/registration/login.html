@@ -3,8 +3,8 @@
 {% block content %}
 <h1>Log In</h1>
 <form method="post">{% csrf_token %}
-    {{ form }}
+    {{ form.as_p }}
     <button type="submit">Log In</button>
 </form>
-
+<p>New here? <a href="{% url 'signup' %}">Create an account</a>.</p>
 {% endblock content %}
